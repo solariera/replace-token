@@ -1,6 +1,6 @@
 {
   "name": "@solariera/replace-token",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Replace the token in the text",
   "author": "Solariera <always@solariera.com> (https://github.com/solariera)",
   "license": "MIT",
