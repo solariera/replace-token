@@ -1,4 +1,4 @@
-import { hasKey } from '../has-key';
+import { hasKey } from '../hasKey';
 
 /**
  * hasEveryKeys

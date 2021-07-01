@@ -1,9 +1,11 @@
-import { hasEveryKeys } from '../has-every-keys';
+import { hasEveryKeys } from '../hasEveryKeys';
+import { isEmptyObject } from '../isEmptyObject';
 
 type ReplacerValueType = string | number | RecursiveReplacerType;
 type ChildReplacerType = { [key in string]: ReplacerValueType };
 type RecursiveReplacerType = { format: string; replacer: ChildReplacerType };
 type ReplacerType = { [key in string]: ReplacerValueType };
+type UnknownReplacerType = string | number | { [key in string]: unknown };
 
 /**
  * isRecursiveReplacerType
@@ -11,14 +13,14 @@ type ReplacerType = { [key in string]: ReplacerValueType };
  * @param {ReplacerValueType} value
  * @return {boolean}
  */
-export const isRecursiveReplacerType = (value: ReplacerValueType): value is RecursiveReplacerType => {
+export const isRecursiveReplacerType = (value: UnknownReplacerType): value is RecursiveReplacerType => {
   // objectでなければそもそも対象外なのでfalseを返す
   if (typeof value !== 'object') return false;
 
   /**
    * RecursiveReplacerTypeと判定するために必要なキー
    */
-  const targetKeys = ['format', 'replacers'];
+  const targetKeys = ['format', 'replacer'];
 
   // targetKeysを持っているオブジェクトであればtrueを返す
   if (hasEveryKeys(value, ...targetKeys)) return true;
@@ -30,12 +32,12 @@ export const isRecursiveReplacerType = (value: ReplacerValueType): value is Recu
 /**
  * replaceToken
  * テキスト中に出現する{key}を、{ key: value }で定義したvalueに置き換えたテキストを返す
- * @param original
- * @param replacers
+ * @param {string} original
+ * @param {ReplacerType} replacers
  */
 export const replaceToken = (original: string, replacers: ReplacerType = {}): string => {
   // 置換するものがなければそのまま返す
-  if (!Object.keys(replacers).length) return original;
+  if (isEmptyObject(replacers)) return original;
 
   /**
    * 戻り値用の置き換え文字列
