@@ -26,8 +26,8 @@ yarn add @solariera/replace-token
 import { replaceToken } from '@solariera/replace-token';
 
 /** B A S I C   R E P L A C E */
-const original = 'I am a {parson}';
-const replacer = { parson: 'pen' };
+const original = 'I am a {person}';
+const replacer = { person: 'pen' };
 const replacerText = replaceToken(original, replacer);
 console.log(replacerText); // I am a pen
 
